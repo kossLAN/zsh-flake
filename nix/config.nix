@@ -17,6 +17,9 @@ in {
 
   # Additional .zshrc configuration that you can add that will be appended to the .zshrc
   extraZshrc = ''
+    # Stupid thing broken in NixOS module I think
+    autoload -Uz add-zsh-hook
+
     # Movement bindings
     bindkey -v
     bindkey "^[[1;5C" forward-word

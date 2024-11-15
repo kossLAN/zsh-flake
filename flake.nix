@@ -1,5 +1,5 @@
 {
-  description = "My zsh dot files in flake format";
+  description = "My ZSH dot files in flake format";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs";
