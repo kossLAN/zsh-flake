@@ -1,5 +1,5 @@
 {
-  description = "My ZSH dot files in flake format";
+  description = "My zsh dot files in flake format";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs";
@@ -15,7 +15,25 @@
       (system: fn system nixpkgs.legacyPackages.${system});
 
     overlay = final: prev: {
-      zsh = self.packages.${prev.system}.default;
+      zsh = prev.stdenv.mkDerivation {
+        inherit (self.packages.${prev.system}.default) name;
+        inherit (self.packages.${prev.system}.default) version;
+
+        buildCommand = ''
+          mkdir -p $out
+          cp -r ${self.packages.${prev.system}.default}/* $out/
+        '';
+
+        meta = {
+          inherit (prev.zsh.meta) platforms;
+          description = "Custom zsh shell";
+          shellPath = "/bin/zsh";
+        };
+
+        passthru = {
+          shellPath = "/bin/zsh";
+        };
+      };
     };
   in {
     # Package so you can test this out, without installing :3.
@@ -28,6 +46,7 @@
       default = zsh;
     });
 
+    # Export the overlay
     overlays.default = overlay;
   };
 }
