@@ -10,11 +10,11 @@ in
     paths = [pkgs.zsh];
     buildInputs = [pkgs.makeWrapper];
     postBuild = ''
-      # When it comes to zsh options, I'm probably missing some important ones,
-      # if you know of any that I should add please make an issue for me, thank you.
-      # The sh comment before the multiline is for syntax highlighting in neovim.
-      mkdir -p $out/etc/zsh
-      cp ${pkgs.writeText "zshrc" #sh
+            # When it comes to zsh options, I'm probably missing some important ones,
+            # if you know of any that I should add please make an issue for me, thank you.
+            # The sh comment before the multiline is for syntax highlighting in neovim.
+            mkdir -p $out/etc/zsh
+            cp ${pkgs.writeText "zshrc" #sh
         
         ''
           # Auto suggestions
@@ -53,10 +53,12 @@ in
               fi
             '')
             conf.plugins}
-              ${conf.extraZshrc}
+
+          ${conf.extraZshrc}
         ''} $out/etc/zsh/.zshrc
 
       wrapProgram $out/bin/zsh \
-        --set ZDOTDIR "$out/etc/zsh" \
+        --prefix PATH : "${lib.makeBinPath conf.extraPackages}" \
+        --set ZDOTDIR "$out/etc/zsh"
     '';
   }
