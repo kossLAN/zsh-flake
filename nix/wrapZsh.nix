@@ -10,12 +10,11 @@ in
     paths = [pkgs.zsh];
     buildInputs = [pkgs.makeWrapper];
     postBuild = ''
-            # When it comes to zsh options, I'm probably missing some important ones,
-            # if you know of any that I should add please make an issue for me, thank you.
-            # The sh comment before the multiline is for syntax highlighting in neovim.
-            mkdir -p $out/etc/zsh
-            cp ${pkgs.writeText "zshrc" #sh
-        
+      # When it comes to zsh options, I'm probably missing some important ones,
+      # if you know of any that I should add please make an issue for me, thank you.
+      # The sh comment before the multiline is for syntax highlighting in neovim.
+      mkdir -p $out/etc/zsh
+      cp ${pkgs.writeText "zshrc"
         ''
           # Auto suggestions
           ${
@@ -31,6 +30,8 @@ in
           HISTFILE="$HOME/.zsh_history"
           HISTSIZE=10000
           SAVEHIST=10000
+          PATH=${lib.makeBinPath conf.extraPackages}:$PATH
+
           setopt AUTO_CD
           setopt AUTO_PUSHD
           setopt PUSHD_IGNORE_DUPS
