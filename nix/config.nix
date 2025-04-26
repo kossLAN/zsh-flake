@@ -15,10 +15,6 @@ in {
   # Whether or not to enable auto suggestions
   autoSuggestions = true;
 
-  extraPackages = with pkgs; [
-    fzf
-  ];
-
   # Additional .zshrc configuration that you can add that will be appended to the .zshrc
   extraZshrc = ''
     # Stupid thing broken in NixOS module I think
@@ -30,7 +26,7 @@ in {
     bindkey "^[[1;5D" backward-word
 
     # Special plugin cases
-    source <(fzf --zsh)
+    source <(${lib.getExe pkgs.fzf} --zsh)
   '';
 
   # A list of path's to a plugin

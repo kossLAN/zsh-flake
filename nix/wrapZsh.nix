@@ -58,7 +58,6 @@ in
         ''} $out/etc/zsh/.zshrc
 
       wrapProgram $out/bin/zsh \
-        --prefix PATH : "${lib.makeBinPath conf.extraPackages}" \
         --set ZDOTDIR "$out/etc/zsh"
     '';
   }
