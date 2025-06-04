@@ -30,7 +30,10 @@ in
           HISTFILE="$HOME/.zsh_history"
           HISTSIZE=10000
           SAVEHIST=10000
+
+          # Additional Environment Variables
           PATH=${lib.makeBinPath conf.extraPackages}:$PATH
+          NIX_BUILD_SHELL=zsh
 
           setopt AUTO_CD
           setopt AUTO_PUSHD
