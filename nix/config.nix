@@ -40,10 +40,8 @@ in {
 
     setopt prompt_subst
     PROMPT='%F{cyan}%~%f  '
-    # RPROMPT='%F{lightblue}$(git_prompt_info)%f'
     RPROMPT='$vcs_info_msg_0_'
     zstyle ':vcs_info:git*' formats "%b %m%u%c "
-    # zstyle ':vcs_info:git*' formats "(%{$fg[lightblue]%}%b)%{$reset_color%}%u%c%{$reset_color%} "
   '';
 
   # A list of path's to a plugin
