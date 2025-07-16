@@ -20,7 +20,7 @@ in {
   ];
 
   # Additional .zshrc configuration that you can add that will be appended to the .zshrc
-  extraZshrc = ''
+  extraZshrc = /*sh*/ '' 
     # Stupid thing broken in NixOS module I think
     autoload -Uz add-zsh-hook
 
@@ -31,18 +31,23 @@ in {
 
     # Special plugin cases
     source <(fzf --zsh)
+
+    # Minimal Prompt
+    autoload -Uz vcs_info
+    zstyle ':vcs_info:*' enable git 
+    zstyle ':vcs_info:*' check-for-changes true
+    precmd() { vcs_info }
+
+    setopt prompt_subst
+    PROMPT='%F{cyan}%~%f  '
+    # RPROMPT='%F{lightblue}$(git_prompt_info)%f'
+    RPROMPT='$vcs_info_msg_0_'
+    zstyle ':vcs_info:git*' formats "%b %m%u%c "
+    # zstyle ':vcs_info:git*' formats "(%{$fg[lightblue]%}%b)%{$reset_color%}%u%c%{$reset_color%} "
   '';
 
   # A list of path's to a plugin
   plugins = [
-    # The ZSH theme that I use, I think it looks good, go check it out.
-    "${pkgs.fetchFromGitHub {
-      owner = "zthxxx";
-      repo = "jovial";
-      rev = "701ea89b6dd2b9859dab32bd083a16643b338b47";
-      sha256 = "sha256-VVGBG0ZoL25v+Ht1QbnZMc1TqTiJvr211OvyVwNc3bc=";
-    }}/jovial.zsh-theme"
-
     "${pkgs.fetchFromGitHub {
       owner = "zthxxx";
       repo = "zsh-history-enquirer";
@@ -57,7 +62,6 @@ in {
       sha256 = "sha256-4rW2N+ankAH4sA6Sa5mr9IKsdAg7WTgrmyqJ2V1vygQ=";
     }}/zsh-syntax-highlighting.zsh"
 
-    "${oh-my-zsh}/plugins/git/git.plugin.zsh"
     "${oh-my-zsh}/plugins/urltools/urltools.plugin.zsh"
     "${oh-my-zsh}/plugins/bgnotify/bgnotify.plugin.zsh"
   ];
