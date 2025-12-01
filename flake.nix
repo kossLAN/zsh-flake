@@ -20,7 +20,7 @@
 
         buildCommand = ''
           mkdir -p $out
-          cp -r ${self.packages.${prev.system}.default}/* $out/
+          cp -r ${self.packages.${prev.stdenv.hostPlatform.system}.default}/* $out/
         '';
 
         meta = {
