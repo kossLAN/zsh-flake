@@ -16,7 +16,7 @@
 
     overlay = final: prev: {
       zsh = prev.stdenv.mkDerivation {
-        inherit (self.packages.${prev.system}.default) name;
+        inherit (self.packages.${prev.stdenv.hostPlatform.system}.default) name;
 
         buildCommand = ''
           mkdir -p $out
